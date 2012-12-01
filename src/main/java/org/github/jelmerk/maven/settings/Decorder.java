@@ -25,12 +25,14 @@ import static java.lang.String.format;
  */
 public class Decorder {
 
-    public static final String SETTINGS_SECURITY_FILE_SHORT_OPT = "s";
-    public static final String SETTINGS_SECURITY_FILE_LONG_OPT = "settings-security";
-    public static final String SETTINGS_FILE_LONG_OPT = "settings";
-    public static final String SETTINGS_FILE_SHORT_OPT = "f";
+    private static final String SETTINGS_SECURITY_FILE_SHORT_OPT = "s";
+    private static final String SETTINGS_SECURITY_FILE_LONG_OPT = "settings-security";
+    private static final String SETTINGS_FILE_LONG_OPT = "settings";
+    private static final String SETTINGS_FILE_SHORT_OPT = "f";
 
-    public static void main(String[] args) throws Exception {
+    private static final int MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE = 1;
+
+    public static void main(String... args) throws Exception {
 
         Options options = createOptions();
 
@@ -42,7 +44,7 @@ public class Decorder {
 
         if (settingsFileName == null || securityFileName == null) {
             printHelp(options);
-            System.exit(1);
+            System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
         }
 
         File settingsFile = new File(settingsFileName);
@@ -50,12 +52,12 @@ public class Decorder {
 
         if (!settingsFile.exists()) {
             System.out.printf("Provided settings file : %s does not exist%n", settingsFile.getAbsolutePath());
-            System.exit(1);
+            System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
         }
 
         if (!settingsFile.exists()) {
             System.out.printf("Provided security file : %s does not exist%n", securityFile.getAbsolutePath());
-            System.exit(1);
+            System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
         }
 
         printPasswords(settingsFile, securityFile);
@@ -63,8 +65,6 @@ public class Decorder {
 
     private static String decodePassword(String encodedPassword, String key) throws PlexusCipherException {
         DefaultPlexusCipher cipher = new DefaultPlexusCipher();
-
-
         return cipher.decryptDecorated(encodedPassword, key);
     }
 
@@ -75,6 +75,7 @@ public class Decorder {
     private static SettingsSecurity readSettingsSecurity(File file) throws SecDispatcherException {
         return SecUtil.read(file.getAbsolutePath(), true);
     }
+
     private static Settings readSettings(File file) throws IOException, XmlPullParserException {
         SettingsXpp3Reader reader = new SettingsXpp3Reader();
         return reader.read(new FileInputStream(file));
