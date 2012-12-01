@@ -7,6 +7,6 @@ This tool lets you decrypt these passwords as long as you have access to both th
 To use it [download](https://github.com/downloads/jelmerk/maven-settings-decoder/settings-decoder.zip) the compiled distributable
 or build it from source (using gradle, because of irony)
 
-> usage: settings-decoder
->  -f,--settings <arg>            location of settings.xml file.
->  -s,--settings-security <arg>   location of settings-security.xml.
+    usage: settings-decoder
+     -f,--settings <arg>            location of settings.xml file.
+     -s,--settings-security <arg>   location of settings-security.xml.
