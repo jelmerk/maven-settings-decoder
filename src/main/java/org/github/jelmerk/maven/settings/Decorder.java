@@ -46,15 +46,16 @@ public class Decorder {
         }
 
         File settingsFile = new File(settingsFileName);
-        File securityFile = new File(securityFileName);
 
         if (!settingsFile.exists()) {
-            System.out.printf("Provided settings file : %s does not exist%n", settingsFile.getAbsolutePath());
+            System.out.printf("Settings file : %s does not exist%n", settingsFile.getAbsolutePath());
             System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
         }
 
+        File securityFile = new File(securityFileName);
+
         if (!settingsFile.exists()) {
-            System.out.printf("Provided security file : %s does not exist%n", securityFile.getAbsolutePath());
+            System.out.printf("Security file : %s does not exist%n", securityFile.getAbsolutePath());
             System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
         }
 
