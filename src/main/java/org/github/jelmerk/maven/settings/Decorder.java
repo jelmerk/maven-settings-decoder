@@ -63,6 +63,8 @@ public class Decorder {
 
     private static String decodePassword(String encodedPassword, String key) throws PlexusCipherException {
         DefaultPlexusCipher cipher = new DefaultPlexusCipher();
+
+
         return cipher.decryptDecorated(encodedPassword, key);
     }
 
