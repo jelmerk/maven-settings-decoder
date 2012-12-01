@@ -18,8 +18,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-import static java.lang.String.format;
-
 /**
  * @author Jelmer Kuperus
  */
@@ -102,7 +100,7 @@ public class Decorder {
         String encodedMasterPassword = settingsSecurity.getMaster();
         String plainTextMasterPassword = decodeMasterPassword(encodedMasterPassword);
 
-        System.out.println(format("Master password is : %s", plainTextMasterPassword));
+        System.out.printf("Master password is : %s%n", plainTextMasterPassword);
         List<Server> servers = settings.getServers();
 
         for (Server server : servers) {
