@@ -106,7 +106,19 @@ public class Decorder {
 
         for (Server server : servers) {
             String encodedServerPassword = server.getPassword();
-            String plainTextServerPassword = decodePassword(encodedServerPassword, plainTextMasterPassword);
+
+            final String plainTextServerPassword;
+            if (encodedServerPassword.startsWith("{")
+             && encodedServerPassword.endsWith("}"))
+            {
+                plainTextServerPassword =
+                    decodePassword( encodedServerPassword
+                                  , plainTextMasterPassword
+                                  );
+            } else {
+                /* Not encoded. */
+                plainTextServerPassword = encodedServerPassword;
+            }
 
             System.out.println("-------------------------------------------------------------------------");
             System.out.printf("Credentials for server %s are :%n", server.getId());
