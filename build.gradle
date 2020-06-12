@@ -4,7 +4,7 @@ apply plugin: 'idea'
 
 defaultTasks 'clean', 'distZip'
 
-mainClassName='org.github.jelmerk.maven.settings.Decorder'
+mainClassName='org.github.jelmerk.maven.settings.Decoder'
 description='Maven settings.xml decoder'
 
 repositories {
