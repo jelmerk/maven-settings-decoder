@@ -28,7 +28,7 @@ public class Decoder {
     private static final String SETTINGS_FILE_LONG_OPT = "settings";
     private static final String SETTINGS_FILE_SHORT_OPT = "f";
 
-    private static final int MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE = 1;
+    private static final int INVALID_ARGUMENTS_EXIT_CODE = 1;
 
     public static void main(String... args) throws Exception {
 
@@ -37,26 +37,21 @@ public class Decoder {
         CommandLineParser parser = new PosixParser();
         CommandLine commandLine = parser.parse(options, args);
 
-        String settingsFileName = commandLine.getOptionValue(SETTINGS_FILE_SHORT_OPT);
-        String securityFileName = commandLine.getOptionValue(SETTINGS_SECURITY_FILE_SHORT_OPT);
-
-        if (settingsFileName == null || securityFileName == null) {
-            printHelp(options);
-            System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
-        }
+        String settingsFileName = commandLine.getOptionValue(SETTINGS_FILE_SHORT_OPT, System.getProperty("user.home") + File.separatorChar + ".m2" + File.separatorChar + "settings.xml");
+        String securityFileName = commandLine.getOptionValue(SETTINGS_SECURITY_FILE_SHORT_OPT, System.getProperty("user.home") + File.separatorChar + ".m2" + File.separatorChar + "settings-security.xml");
 
         File settingsFile = new File(settingsFileName);
 
         if (!settingsFile.exists()) {
             System.out.printf("Settings file : %s does not exist%n", settingsFile.getAbsolutePath());
-            System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
+            System.exit(INVALID_ARGUMENTS_EXIT_CODE);
         }
 
         File securityFile = new File(securityFileName);
 
         if (!settingsFile.exists()) {
             System.out.printf("Security file : %s does not exist%n", securityFile.getAbsolutePath());
-            System.exit(MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE);
+            System.exit(INVALID_ARGUMENTS_EXIT_CODE);
         }
 
         printPasswords(settingsFile, securityFile);
@@ -85,11 +80,6 @@ public class Decoder {
         options.addOption(SETTINGS_SECURITY_FILE_SHORT_OPT, SETTINGS_SECURITY_FILE_LONG_OPT, true, "location of settings-security.xml.");
         options.addOption(SETTINGS_FILE_SHORT_OPT, SETTINGS_FILE_LONG_OPT, true, "location of settings.xml file.");
         return options;
-    }
-
-    private static void printHelp(Options options) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("settings-decoder", options);
     }
 
     private static void printPasswords(File settingsFile, File securityFile)
