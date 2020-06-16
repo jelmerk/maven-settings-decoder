@@ -82,11 +82,6 @@ public class Decoder {
         return options;
     }
 
-    private static void printHelp(Options options) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("settings-decoder", options);
-    }
-
     private static void printPasswords(File settingsFile, File securityFile)
             throws IOException, XmlPullParserException, SecDispatcherException, PlexusCipherException {
 
