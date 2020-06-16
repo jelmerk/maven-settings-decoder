@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author Jelmer Kuperus
  */
-public class Decorder {
+public class Decoder {
 
     private static final String SETTINGS_SECURITY_FILE_SHORT_OPT = "s";
     private static final String SETTINGS_SECURITY_FILE_LONG_OPT = "settings-security";
