@@ -31,7 +31,6 @@ public class Decoder {
     private static final int MISSING_OR_INVALID_ARGUMENTS_EXIT_CODE = 1;
 
     public static void main(String... args) throws Exception {
-
         Options options = createOptions();
 
         CommandLineParser parser = new PosixParser();
@@ -106,13 +105,21 @@ public class Decoder {
 
         for (Server server : servers) {
             String encodedServerPassword = server.getPassword();
+            String encodedServerPassphrase = server.getPassphrase();
             String plainTextServerPassword = decodePassword(encodedServerPassword, plainTextMasterPassword);
+            String plainTextServerPassphrase = decodePassword(encodedServerPassphrase, plainTextMasterPassword);
 
             System.out.println("-------------------------------------------------------------------------");
             System.out.printf("Credentials for server %s are :%n", server.getId());
             System.out.printf("Username : %s%n", server.getUsername());
-            System.out.printf("Password : %s%n", plainTextServerPassword);
+            if (plainTextServerPassword != null) {
+            	System.out.printf("Password : %s%n", plainTextServerPassword);
+            }
+            if (plainTextServerPassphrase != null) {
+            	System.out.printf("Passphrase : %s%n", plainTextServerPassphrase);
+            }
         }
 
     }
+    
 }
