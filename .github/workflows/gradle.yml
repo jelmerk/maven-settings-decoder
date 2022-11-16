@@ -36,6 +36,6 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         arguments: publish
-        env:
-          USERNAME: ${{ github.actor }}
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        USERNAME: ${{ github.actor }}
+        TOKEN: ${{ secrets.GITHUB_TOKEN }}
