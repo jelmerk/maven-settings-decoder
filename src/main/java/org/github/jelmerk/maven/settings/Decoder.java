@@ -31,7 +31,6 @@ public class Decoder {
     private static final int INVALID_ARGUMENTS_EXIT_CODE = 1;
 
     public static void main(String... args) throws Exception {
-
         Options options = createOptions();
 
         CommandLineParser parser = new DefaultParser();
@@ -86,6 +85,11 @@ public class Decoder {
         return options;
     }
 
+    private static void printHelp(Options options) {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("settings-decoder", options);
+    }
+
     private static void printPasswords(File settingsFile, File securityFile)
             throws IOException, XmlPullParserException, SecDispatcherException, PlexusCipherException {
 
@@ -100,25 +104,21 @@ public class Decoder {
 
         for (Server server : servers) {
             String encodedServerPassword = server.getPassword();
-
-            final String plainTextServerPassword;
-            if (encodedServerPassword.startsWith("{")
-             && encodedServerPassword.endsWith("}"))
-            {
-                plainTextServerPassword =
-                    decodePassword( encodedServerPassword
-                                  , plainTextMasterPassword
-                                  );
-            } else {
-                /* Not encoded. */
-                plainTextServerPassword = encodedServerPassword;
-            }
+            String encodedServerPassphrase = server.getPassphrase();
+            String plainTextServerPassword = decodePassword(encodedServerPassword, plainTextMasterPassword);
+            String plainTextServerPassphrase = decodePassword(encodedServerPassphrase, plainTextMasterPassword);
 
             System.out.println("-------------------------------------------------------------------------");
             System.out.printf("Credentials for server %s are :%n", server.getId());
             System.out.printf("Username : %s%n", server.getUsername());
-            System.out.printf("Password : %s%n", plainTextServerPassword);
+            if (plainTextServerPassword != null) {
+            	System.out.printf("Password : %s%n", plainTextServerPassword);
+            }
+            if (plainTextServerPassphrase != null) {
+            	System.out.printf("Passphrase : %s%n", plainTextServerPassphrase);
+            }
         }
 
     }
+    
 }
