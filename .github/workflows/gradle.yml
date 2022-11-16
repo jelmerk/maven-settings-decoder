@@ -28,7 +28,14 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Setup with Gradle
+    - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     - name: Build with gradle
       run: ./gradlew build
+    - name: Publish Package
+      uses: gradle/gradle-build-action@v2
+      with:
+        arguments: publish
+        env:
+          USERNAME: ${{ github.actor }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
