@@ -33,7 +33,7 @@ jobs:
       with:
         arguments: build
     - name: Publish Package
-      uses: actions/upload-artifact
+      uses: actions/upload-artifact@v3
       with:
         name: maven-settings-decoder.zip
         path: build/distributions/maven-settings-decoder.zip
