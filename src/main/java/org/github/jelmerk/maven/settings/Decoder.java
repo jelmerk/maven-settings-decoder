@@ -34,7 +34,7 @@ public class Decoder {
 
         Options options = createOptions();
 
-        CommandLineParser parser = new PosixParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine commandLine = parser.parse(options, args);
 
         String settingsFileName = commandLine.getOptionValue(SETTINGS_FILE_SHORT_OPT);
@@ -63,8 +63,12 @@ public class Decoder {
     }
 
     private static String decodePassword(String encodedPassword, String key) throws PlexusCipherException {
-        DefaultPlexusCipher cipher = new DefaultPlexusCipher();
-        return cipher.decryptDecorated(encodedPassword, key);
+        if (encodedPassword.startsWith("{")) {
+            DefaultPlexusCipher cipher = new DefaultPlexusCipher();
+            return cipher.decryptDecorated(encodedPassword, key);
+        } else {
+            return encodedPassword;
+        }
     }
 
     private static String decodeMasterPassword(String encodedMasterPassword) throws PlexusCipherException {
