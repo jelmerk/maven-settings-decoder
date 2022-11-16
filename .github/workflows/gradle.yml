@@ -28,14 +28,12 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Setup Gradle
-      uses: gradle/gradle-build-action@v2
-    - name: Build with gradle
-      run: ./gradlew build
-    - name: Publish Package
+    - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: publish
-      env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        arguments: build
+    - name: Publish Package
+      uses: actions/upload-artifact
+      with:
+        name: maven-settings-decoder.zip
+        path: build/distributions/maven-settings-decoder.zip
