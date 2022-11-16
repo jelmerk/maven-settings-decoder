@@ -57,7 +57,7 @@ public class Decoder {
     }
 
     private static String decodePassword(String encodedPassword, String key) throws PlexusCipherException {
-        if (encodedPassword.startsWith("{")) {
+        if (encodedPassword != null && encodedPassword.startsWith("{") && encodedPassword.endsWith("}")) {
             DefaultPlexusCipher cipher = new DefaultPlexusCipher();
             return cipher.decryptDecorated(encodedPassword, key);
         } else {
